@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -18,13 +17,21 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Función para hacer scroll suave a la sección
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Links de navegación
   const NavLinks = () => (
     <>
+      <button
+        onClick={() => scrollToSection("hero")}
+        className="text-sm font-medium hover:text-primary transition-colors"
+      >
+        Inicio
+      </button>
       <button
         onClick={() => scrollToSection("projects")}
         className="text-sm font-medium hover:text-primary transition-colors"
@@ -55,22 +62,21 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+        {/* Marca que lleva al Hero */}
         <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => scrollToSection("hero")}
           className="text-lg font-bold hover:text-primary transition-colors"
         >
-          BD
+          ES
         </button>
 
-        {/* Desktop Navigation */}
+        {/* Navegación en Desktop */}
         <div className="hidden md:flex items-center space-x-8">
           <NavLinks />
-          <ThemeToggle />
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Navegación en Móvil */}
         <div className="md:hidden flex items-center gap-2">
-          <ThemeToggle />
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
