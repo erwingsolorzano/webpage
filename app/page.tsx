@@ -12,6 +12,7 @@ import AnimatedShapes from "@/components/AnimatedShapes";
 import GradientButton from "@/components/GradientButton";
 import CertificationSection from "@/components/CertificationSection";
 import ResumeSection from "@/components/ResumeSection";
+import Footer from "@/components/Footer";
 
 const projects = [
   {
@@ -27,6 +28,10 @@ export default function Home() {
   const [text, setText] = useState("");
   const phrase = "Erwing Solorzano";
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   // Efecto de "máquina de escribir"
   useEffect(() => {
     let index = 0;
@@ -49,42 +54,33 @@ export default function Home() {
   };
 
   // Parallax
-  const parallaxRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: parallaxRef,
-    offset: ["start start", "end start"],
-  });
+  // 1) Medir el scroll de toda la página en lugar de un target específico:
+  const { scrollYProgress } = useScroll();
 
-  const springConfig = { stiffness: 50, damping: 50, restDelta: 0.004 };
+  // 2) Aplicar un "spring" para suavizar el movimiento
+  const springConfig = { stiffness: 20, damping: 10, restDelta: 0.004 };
   const smoothProgress = useSpring(scrollYProgress, springConfig);
 
   return (
-    // 1) Quitamos overflow-hidden para que la página pueda hacer scroll
     <main className="min-h-screen relative">
-      {/* Navbar con enlaces de scroll */}
       <Navbar />
 
-      {/* 2) Contenedor del parallax en position fixed y z-[-10] para que no bloquee clics */}
-      <div
-        ref={parallaxRef}
-        className="fixed inset-0 -z-10 pointer-events-none"
-      >
+      {/* Contenedor del parallax con posición fija y z-[-10] */}
+      <div className="fixed inset-0 -z-10 pointer-events-none">
         <motion.div
           style={{
-            y: useTransform(smoothProgress, [0, 1], ["0%", "-50%"]),
+            // 3) Transformar en base a scrollYProgress
+            y: useTransform(smoothProgress, [0, 1], ["0%", "-70%"]),
             backgroundImage:
-            "url('https://images.unsplash.com/photo-1603481546238-487240415921?q=80&w=2070&auto=format&fit=crop')",
+              "url('https://images.unsplash.com/photo-1603481546238-487240415921?q=80&w=2070&auto=format&fit=crop')",
             backgroundSize: "cover",
             backgroundPosition: "center",
-            // Al ser fixed, con 'height: 200%' puedes prolongar la imagen
-            // para tener más margen en el efecto parallax
             height: "200%",
             width: "100%",
           }}
           className="absolute inset-0"
         />
         <AnimatedShapes scrollYProgress={smoothProgress} />
-        {/* Capa de oscurecimiento */}
         <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
       </div>
 
@@ -124,7 +120,10 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            <GradientButton href="https://github.com/erwingsolorzano" icon={Github}>
+            <GradientButton
+              href="https://github.com/erwingsolorzano"
+              icon={Github}
+            >
               GitHub
             </GradientButton>
             <GradientButton href="mailto:tuemail@example.com" icon={Mail}>
@@ -152,7 +151,10 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.5 }}
-        variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } }}
+        variants={{
+          hidden: { opacity: 0, y: 50 },
+          visible: { opacity: 1, y: 0 },
+        }}
       >
         <div className="max-w-6xl mx-auto">
           <motion.h2
@@ -194,7 +196,10 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.5 }}
-        variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } }}
+        variants={{
+          hidden: { opacity: 0, y: 50 },
+          visible: { opacity: 1, y: 0 },
+        }}
       >
         <div className="max-w-6xl mx-auto">
           <motion.h2
@@ -218,7 +223,10 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.5 }}
-        variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } }}
+        variants={{
+          hidden: { opacity: 0, y: 50 },
+          visible: { opacity: 1, y: 0 },
+        }}
       >
         <div className="max-w-2xl mx-auto">
           <motion.h2
@@ -226,7 +234,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1 }}
           >
             Contacto
           </motion.h2>
@@ -234,7 +242,7 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Estilo global para el cursor parpadeante */}
+      {/* Cursor parpadeante */}
       <style jsx global>{`
         @keyframes blink {
           0%,
@@ -249,6 +257,7 @@ export default function Home() {
           animation: blink 1s infinite;
         }
       `}</style>
+      <Footer />
     </main>
   );
 }

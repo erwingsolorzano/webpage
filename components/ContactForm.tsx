@@ -50,10 +50,11 @@ export default function ContactForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-background p-8 rounded-lg shadow-lg border-2"
+      // Contenedor con menor padding y altura máxima del 80% de la pantalla
+      className="bg-background p-4 rounded-lg shadow-lg border-2 max-h-[80vh] overflow-y-auto"
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="name"
@@ -61,7 +62,11 @@ export default function ContactForm() {
               <FormItem>
                 <FormLabel>Nombre</FormLabel>
                 <FormControl>
-                  <Input placeholder="Tu nombre" className="border-2" {...field} />
+                  <Input
+                    placeholder="Tu nombre"
+                    className="border-2"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -74,7 +79,12 @@ export default function ContactForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="tu@email.com" type="email" className="border-2" {...field} />
+                  <Input
+                    placeholder="tucorreo@ejemplo.com"
+                    type="email"
+                    className="border-2"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -89,7 +99,8 @@ export default function ContactForm() {
                 <FormControl>
                   <Textarea
                     placeholder="Tu mensaje..."
-                    className="min-h-[120px] border-2"
+                    // Menor altura mínima
+                    className="min-h-[100px] border-2"
                     {...field}
                   />
                 </FormControl>
