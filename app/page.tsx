@@ -13,6 +13,9 @@ import GradientButton from "@/components/GradientButton";
 import CertificationSection from "@/components/CertificationSection";
 import ResumeSection from "@/components/ResumeSection";
 import Footer from "@/components/Footer";
+import BackToTopButton from "@/components/BackToTopButton";
+import Image from "next/image";
+
 
 const projects = [
   {
@@ -26,6 +29,7 @@ const projects = [
 
 export default function Home() {
   const [text, setText] = useState("");
+  const [typingComplete, setTypingComplete] = useState(false);
   const phrase = "Erwing Solorzano";
 
   useEffect(() => {
@@ -42,6 +46,7 @@ export default function Home() {
         index++;
       } else {
         clearInterval(interval);
+        setTypingComplete(true);
       }
     }, 100);
     return () => clearInterval(interval);
@@ -67,70 +72,100 @@ export default function Home() {
 
       {/* Contenedor del parallax con posición fija y z-[-10] */}
       <div className="fixed inset-0 -z-10 pointer-events-none">
-        <motion.div
-          style={{
-            // 3) Transformar en base a scrollYProgress
-            y: useTransform(smoothProgress, [0, 1], ["0%", "-70%"]),
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1603481546238-487240415921?q=80&w=2070&auto=format&fit=crop')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            height: "200%",
-            width: "100%",
-          }}
-          className="absolute inset-0"
-        />
+          <motion.div
+            style={{
+              y: useTransform(smoothProgress, [0, 1], ["0%", "-70%"]),
+            }}
+            // Aseguramos que tenga las mismas dimensiones que el div original
+            className="absolute inset-0 h-[200%] w-full"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1603481546238-487240415921?q=80&w=2070&auto=format&fit=crop"
+              alt="Fondo parallax"
+              fill
+              className="object-cover"
+              priority
+            />
+          </motion.div>
         <AnimatedShapes scrollYProgress={smoothProgress} />
         <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
       </div>
 
       {/* Hero Section */}
-      <section
-        id="hero"
-        className="min-h-screen flex flex-col justify-center items-center px-4 relative pt-32"
+      <section id="hero" 
+      className="min-h-screen flex flex-col justify-center items-center px-4 relative pt-32">
+      {/* Título con efecto de "máquina de escribir" */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="max-w-4xl text-center relative z-10"
       >
-        <motion.div
+        {/* h1 */}
+        <motion.h1
+          className="text-5xl md:text-7xl font-bold mb-4 font-mono relative"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl text-center relative z-10"
+          transition={{ delay: 0.2, duration: 0.8 }}
         >
-          <motion.h1
-            className="text-5xl md:text-7xl font-bold mb-6 font-mono relative"
+          {text}
+          <span className="ml-1 animate-blink">|</span>
+        </motion.h1>
+
+        {/* 2) Solo mostramos los demás elementos si typingComplete === true */}
+        {typingComplete && (
+          <motion.h2
+            className="text-2xl md:text-3xl font-semibold mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
+            transition={{
+              duration: 1.2,       // Animación más larga
+              ease: "easeInOut",   // Efecto suave
+              delay: 0.2           // Aparece después de un pequeño retraso
+            }}
           >
-            {text}
-            <span className="ml-1 animate-blink">|</span>
-          </motion.h1>
+            Full Stack Developer
+          </motion.h2>
+        )}
+
+        {typingComplete && (
           <motion.p
             className="text-xl md:text-2xl text-muted-foreground mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
+            transition={{
+              duration: 1.2,
+              ease: "easeInOut",
+              delay: 0.4           // Un poco más de retraso
+            }}
           >
-            Especializado en construir APIs robustas y escalables con Node.js,
-            diseñar arquitecturas eficientes e implementar las mejores prácticas
-            de desarrollo backend.
+            Apasionado por construir aplicaciones robustas y escalables, con
+            experiencia en Node.js, diseño de arquitecturas eficientes e
+            implementación de las mejores prácticas de desarrollo tanto en
+            frontend como en backend.
           </motion.p>
+        )}
+
+        {typingComplete && (
           <motion.div
             className="flex gap-4 justify-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
+            transition={{
+              duration: 1.2,
+              ease: "easeInOut",
+              delay: 0.6           // Aún más retraso
+            }}
           >
-            <GradientButton
-              href="https://github.com/erwingsolorzano"
-              icon={Github}
-            >
+            <GradientButton href="https://github.com/erwingsolorzano" icon={Github}>
               GitHub
             </GradientButton>
             <GradientButton href="mailto:tuemail@example.com" icon={Mail}>
               Contacto
             </GradientButton>
           </motion.div>
-        </motion.div>
+        )}
+      </motion.div>
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
@@ -166,7 +201,7 @@ export default function Home() {
           >
             Proyectos Destacados
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 place-items-center">
             {projects.map((project, index) => (
               <motion.div
                 key={project.title}
@@ -258,6 +293,9 @@ export default function Home() {
         }
       `}</style>
       <Footer />
+
+      {/* Botón de "Volver al inicio" */}
+      <BackToTopButton />
     </main>
   );
 }
