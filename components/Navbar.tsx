@@ -50,12 +50,12 @@ export default function Navbar() {
       </button>
       <button
         onClick={() => {
-          scrollToSection("certifications");
+          scrollToSection("resume");
           onNavigate?.();
         }}
         className="text-sm font-medium hover:text-primary transition-colors"
       >
-        Certificaciones
+        Experiencia
       </button>
       <button
         onClick={() => {

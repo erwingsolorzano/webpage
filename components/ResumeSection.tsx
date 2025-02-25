@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Briefcase, Download, GraduationCap, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import GradientButton from "./GradientButton";
 
 const experiences = [
   {
@@ -16,12 +17,6 @@ const experiences = [
     company: "Digital Innovations",
     period: "2020 - 2022",
     description: "Desarrollo de sistemas distribuidos y optimización de bases de datos.",
-  },
-  {
-    title: "Full Stack Developer",
-    company: "StartUp Vision",
-    period: "2018 - 2020",
-    description: "Implementación de soluciones end-to-end para aplicaciones web.",
   },
 ];
 
@@ -45,9 +40,9 @@ export default function ResumeSection() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">Experiencia Profesional</h2>
-          <Button variant="outline" size="lg" className="border-2">
-            <Download className="mr-2 h-5 w-5" /> Descargar CV
-          </Button>
+          <GradientButton href="https://drive.google.com/file/d/18p7Ud7s9ewr6Gy55obNY7bnFfAvrFLO_/view?usp=sharing" icon={Download}>
+              Descargar CV
+            </GradientButton>
         </motion.div>
 
         <div className="space-y-12">

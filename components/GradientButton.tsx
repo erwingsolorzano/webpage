@@ -30,7 +30,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({ children, icon: Icon, h
         <div
           className="absolute inset-0 transition-opacity duration-300 pointer-events-none"
           style={{
-            background: `radial-gradient(circle at ${position.x} ${position.y}, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 80%)`,
+            background: `radial-gradient(circle at ${position.x} ${position.y}, rgba(209, 249, 154, 0.23) 10%, rgba(255, 255, 255, 0) 60%)`,
             opacity: position.opacity,
           }}
         />

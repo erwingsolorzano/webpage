@@ -122,7 +122,7 @@ export default function Home() {
           initial="visible"
           animate={shiftH1 ? "shifted" : "visible"}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="text-5xl md:text-7xl font-bold mb-4 font-mono relative"
+          className="text-5xl md:text-7xl font-bold mb-4 font-[Consolas] relative"
         >
           {text}
           <span className="ml-1 animate-blink">_</span>
