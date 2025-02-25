@@ -15,6 +15,7 @@ import ResumeSection from "@/components/ResumeSection";
 import Footer from "@/components/Footer";
 import BackToTopButton from "@/components/BackToTopButton";
 import Image from "next/image";
+import SocialButtons from "@/components/SocialButtons";
 
 
 const projects = [
@@ -125,7 +126,9 @@ export default function Home() {
           className="text-5xl md:text-7xl font-bold mb-4 font-[Consolas] relative"
         >
           {text}
-          <span className="ml-1 animate-blink">_</span>
+          {!typingComplete && (
+            <span className="ml-1 animate-blink">_</span>
+          )}
         </motion.h1>
 
         {/* 2) Solo mostramos los demás elementos si typingComplete === true */}
@@ -173,12 +176,7 @@ export default function Home() {
               delay: 0.6
             }}
           >
-            <GradientButton href="https://github.com/erwingsolorzano" icon={Github}>
-              GitHub
-            </GradientButton>
-            <GradientButton href="mailto:tuemail@example.com" icon={Mail}>
-              Contacto
-            </GradientButton>
+              <SocialButtons />
           </motion.div>
         )}
       </motion.div>
