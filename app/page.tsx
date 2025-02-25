@@ -101,7 +101,7 @@ export default function Home() {
           />
         </motion.div>
         <AnimatedShapes scrollYProgress={smoothProgress} />
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" />
+        <div className="absolute inset-0 bg-black/60" />
       </div>
 
 
