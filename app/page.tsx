@@ -1,21 +1,22 @@
 "use client";
 
-import { Github, Mail, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import ContactForm from "@/components/ContactForm";
 import ProjectCard from "@/components/ProjectCard";
-import TechStack from "@/components/TechStack";
 import Navbar from "@/components/Navbar";
-import AnimatedShapes from "@/components/AnimatedShapes";
-import GradientButton from "@/components/GradientButton";
-import CertificationSection from "@/components/CertificationSection";
-import ResumeSection from "@/components/ResumeSection";
 import Footer from "@/components/Footer";
 import BackToTopButton from "@/components/BackToTopButton";
 import Image from "next/image";
 import SocialButtons from "@/components/SocialButtons";
+
+import dynamic from "next/dynamic";
+
+const AnimatedShapes = dynamic(() => import("@/components/AnimatedShapes"), { ssr: false });
+const ResumeSection = dynamic(() => import("@/components/ResumeSection"), { ssr: false });
+const TechStack = dynamic(() => import("@/components/TechStack"), { ssr: false });
 
 
 const projects = [
@@ -73,9 +74,8 @@ export default function Home() {
   // Parallax
   // 1) Medir el scroll de toda la página en lugar de un target específico:
   const { scrollYProgress } = useScroll();
+  const springConfig = { stiffness: 20, damping: 8, restDelta: 0.001 };
 
-  // 2) Aplicar un "spring" para suavizar el movimiento
-  const springConfig = { stiffness: 20, damping: 10, restDelta: 0.004 };
   const smoothProgress = useSpring(scrollYProgress, springConfig);
 
   return (
@@ -87,12 +87,13 @@ export default function Home() {
         <motion.div
           style={{
             y: useTransform(smoothProgress, [0, 1], ["0%", "-70%"]),
-            opacity: useTransform(smoothProgress, [0, 0.5], [1, 0])
+            opacity: useTransform(smoothProgress, [0, 0.5], [1, 0]),
+            willChange: "transform",
           }}
-          className="absolute inset-0 h-[200%] w-full"
+          className="absolute inset-0 h-[220%] w-full"
         >
           <Image
-            src="https://images.unsplash.com/photo-1603481546238-487240415921?q=80&w=2070&auto=format&fit=crop"
+            src="/tiny-bg.webp"
             alt="Fondo parallax"
             fill
             className="object-cover"
@@ -100,7 +101,7 @@ export default function Home() {
           />
         </motion.div>
         <AnimatedShapes scrollYProgress={smoothProgress} />
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" />
       </div>
 
 
@@ -195,7 +196,7 @@ export default function Home() {
       {/* Projects Section */}
       <motion.section
         id="projects"
-        className="py-32 px-4 bg-background/45 backdrop-blur-sm relative z-10"
+        className="py-32 px-4 bg-background/45 relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -240,7 +241,7 @@ export default function Home() {
       {/* Tech Stack Section */}
       <motion.section
         id="tech-stack"
-        className="bg-background/49 backdrop-blur-sm py-32 px-4 relative z-10"
+        className="bg-background/49 py-32 px-4 relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -267,7 +268,7 @@ export default function Home() {
       {/* Contact Section */}
       <motion.section
         id="contact"
-        className="bg-background/49.5 backdrop-blur-sm py-32 px-4 relative z-10"
+        className="bg-background/49.5 py-32 px-4 relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}

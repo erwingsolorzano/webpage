@@ -24,7 +24,7 @@ export default function ResumeSection() {
   return (
     <motion.section
       id="resume"
-      className="py-32 px-4 bg-background/48 backdrop-blur-sm relative z-10"
+      className="py-32 px-4 bg-background/48 relative z-10"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
@@ -56,7 +56,7 @@ export default function ResumeSection() {
               className="relative pl-8 border-l-2 border-primary/30"
             >
               <div className="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-primary/30 border-4 border-background" />
-              <div className="bg-background/50 backdrop-blur-sm p-8 rounded-2xl border-2 hover:border-primary/50 transition-colors">
+              <div className="bg-background/50 p-8 rounded-2xl border-2 hover:border-primary/50 transition-colors">
                 <h3 className="text-2xl font-semibold mb-2">{exp.title}</h3>
                 <p className="text-primary mb-2">{exp.company}</p>
                 <p className="text-sm text-muted-foreground mb-4">{exp.period}</p>

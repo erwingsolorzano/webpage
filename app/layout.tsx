@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: 'Erwing Solorzano - FullStack Developer',
   description: 'Website personal de Erwing Solorzano',
   icons: {
-    icon: "/favicon.ico", // ruta en la carpeta public
+    icon: "/favicon.ico",
   },
 };
 
