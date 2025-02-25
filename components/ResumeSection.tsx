@@ -29,7 +29,7 @@ export default function ResumeSection() {
   return (
     <motion.section
       id="resume"
-      className="py-32 px-4 bg-background/80 backdrop-blur-sm relative z-10"
+      className="py-32 px-4 bg-background/48 backdrop-blur-sm relative z-10"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}

@@ -83,24 +83,25 @@ export default function Home() {
 
       {/* Contenedor del parallax con posición fija y z-[-10] */}
       <div className="fixed inset-0 -z-10 pointer-events-none">
-          <motion.div
-            style={{
-              y: useTransform(smoothProgress, [0, 1], ["0%", "-70%"]),
-            }}
-            // Aseguramos que tenga las mismas dimensiones que el div original
-            className="absolute inset-0 h-[200%] w-full"
-          >
-            <Image
-              src="https://images.unsplash.com/photo-1603481546238-487240415921?q=80&w=2070&auto=format&fit=crop"
-              alt="Fondo parallax"
-              fill
-              className="object-cover"
-              priority
-            />
-          </motion.div>
+        <motion.div
+          style={{
+            y: useTransform(smoothProgress, [0, 1], ["0%", "-70%"]),
+            opacity: useTransform(smoothProgress, [0, 0.5], [1, 0])
+          }}
+          className="absolute inset-0 h-[200%] w-full"
+        >
+          <Image
+            src="https://images.unsplash.com/photo-1603481546238-487240415921?q=80&w=2070&auto=format&fit=crop"
+            alt="Fondo parallax"
+            fill
+            className="object-cover"
+            priority
+          />
+        </motion.div>
         <AnimatedShapes scrollYProgress={smoothProgress} />
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
       </div>
+
 
       {/* Hero Section */}
       <section id="hero" 
@@ -196,7 +197,7 @@ export default function Home() {
       {/* Projects Section */}
       <motion.section
         id="projects"
-        className="py-32 px-4 bg-background/60 backdrop-blur-sm relative z-10"
+        className="py-32 px-4 bg-background/45 backdrop-blur-sm relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -232,8 +233,8 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Certifications Section */}
-      <CertificationSection />
+      {/* Certifications Section
+      <CertificationSection /> */}
 
       {/* Resume Section */}
       <ResumeSection />
@@ -241,7 +242,7 @@ export default function Home() {
       {/* Tech Stack Section */}
       <motion.section
         id="tech-stack"
-        className="bg-background/70 backdrop-blur-sm py-32 px-4 relative z-10"
+        className="bg-background/49 backdrop-blur-sm py-32 px-4 relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -268,7 +269,7 @@ export default function Home() {
       {/* Contact Section */}
       <motion.section
         id="contact"
-        className="bg-background/80 backdrop-blur-sm py-32 px-4 relative z-10"
+        className="bg-background/49.5 backdrop-blur-sm py-32 px-4 relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
