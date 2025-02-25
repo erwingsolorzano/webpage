@@ -28,7 +28,7 @@ export default function CertificationSection() {
   return (
     <motion.section
       id="certifications"
-      className="py-32 px-4 bg-background/90 backdrop-blur-sm relative z-10"
+      className="py-32 px-4 bg-background/60 backdrop-blur-sm relative z-10"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}

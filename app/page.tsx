@@ -31,6 +31,7 @@ export default function Home() {
   const [text, setText] = useState("");
   const [typingComplete, setTypingComplete] = useState(false);
   const phrase = "Erwing Solorzano";
+  const [shiftH1, setShiftH1] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -48,9 +49,19 @@ export default function Home() {
         clearInterval(interval);
         setTypingComplete(true);
       }
-    }, 100);
+    }, 80);
     return () => clearInterval(interval);
   }, []);
+
+    // Una vez terminado el typing, con un retardo, animamos el h1 hacia arriba
+    useEffect(() => {
+      if (typingComplete) {
+        const timer = setTimeout(() => {
+          setShiftH1(true);
+        }, 500); // Retardo de 800ms, ajustable a tu gusto
+        return () => clearTimeout(timer);
+      }
+    }, [typingComplete]);
 
   // Para scroll suave a secciones
   const scrollToSection = (id: string) => {
@@ -96,20 +107,24 @@ export default function Home() {
       className="min-h-screen flex flex-col justify-center items-center px-4 relative pt-32">
       {/* Título con efecto de "máquina de escribir" */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        initial={{ opacity: 0, y: 0 }}
+        animate={{ opacity: 1, y: -20 }}
+        transition={{ duration: 2 }}
         className="max-w-4xl text-center relative z-10"
       >
         {/* h1 */}
         <motion.h1
+          variants={{
+            visible: { opacity: 1, y: -10 },
+            shifted: { opacity: 1, y: 0 },
+          }}
+          initial="visible"
+          animate={shiftH1 ? "shifted" : "visible"}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
           className="text-5xl md:text-7xl font-bold mb-4 font-mono relative"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
         >
           {text}
-          <span className="ml-1 animate-blink">|</span>
+          <span className="ml-1 animate-blink">_</span>
         </motion.h1>
 
         {/* 2) Solo mostramos los demás elementos si typingComplete === true */}
@@ -119,9 +134,9 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: 1.2,       // Animación más larga
-              ease: "easeInOut",   // Efecto suave
-              delay: 0.2           // Aparece después de un pequeño retraso
+              duration: 1.2,
+              ease: "easeInOut",
+              delay: 0.2
             }}
           >
             Full Stack Developer
@@ -136,7 +151,7 @@ export default function Home() {
             transition={{
               duration: 1.2,
               ease: "easeInOut",
-              delay: 0.4           // Un poco más de retraso
+              delay: 0.4
             }}
           >
             Apasionado por construir aplicaciones robustas y escalables, con
@@ -154,7 +169,7 @@ export default function Home() {
             transition={{
               duration: 1.2,
               ease: "easeInOut",
-              delay: 0.6           // Aún más retraso
+              delay: 0.6
             }}
           >
             <GradientButton href="https://github.com/erwingsolorzano" icon={Github}>
@@ -181,11 +196,11 @@ export default function Home() {
       {/* Projects Section */}
       <motion.section
         id="projects"
-        className="py-32 px-4 bg-background/80 backdrop-blur-sm relative z-10"
+        className="py-32 px-4 bg-background/60 backdrop-blur-sm relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 1 }}
         variants={{
           hidden: { opacity: 0, y: 50 },
           visible: { opacity: 1, y: 0 },
@@ -226,7 +241,7 @@ export default function Home() {
       {/* Tech Stack Section */}
       <motion.section
         id="tech-stack"
-        className="bg-background/90 backdrop-blur-sm py-32 px-4 relative z-10"
+        className="bg-background/70 backdrop-blur-sm py-32 px-4 relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
