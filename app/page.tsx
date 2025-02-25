@@ -11,8 +11,10 @@ import Footer from "@/components/Footer";
 import BackToTopButton from "@/components/BackToTopButton";
 import Image from "next/image";
 import SocialButtons from "@/components/SocialButtons";
-
 import dynamic from "next/dynamic";
+
+const isProd = process.env.NODE_ENV === "production"
+const basePath = isProd ? "/webpage" : ""
 
 const AnimatedShapes = dynamic(() => import("@/components/AnimatedShapes"), { ssr: false });
 const ResumeSection = dynamic(() => import("@/components/ResumeSection"), { ssr: false });
@@ -93,7 +95,7 @@ export default function Home() {
           className="absolute inset-0 h-[220%] w-full"
         >
           <Image
-            src="/tiny-bg.webp"
+            src={`${basePath}/tiny-bg.webp`}
             alt="Fondo parallax"
             fill
             className="object-cover"

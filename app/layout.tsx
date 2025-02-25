@@ -3,13 +3,15 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 
+const isProd = process.env.NODE_ENV === "production"
+const basePath = isProd ? "/webpage" : ""
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Erwing Solorzano - FullStack Developer',
   description: 'Website personal de Erwing Solorzano',
   icons: {
-    icon: "/favicon.ico",
+    icon: `${basePath}/favicon.ico`,
   },
 };
 
