@@ -34,7 +34,7 @@ const projects = [
 export default function Home() {
   const [text, setText] = useState("");
   const [typingComplete, setTypingComplete] = useState(false);
-  const phrase = "I'm Erwing Solorzano";
+  const phrase = "I'm Erwing Solórzano";
   const [shiftH1, setShiftH1] = useState(false);
 
   useEffect(() => {
@@ -109,12 +109,12 @@ export default function Home() {
 
       {/* Hero Section */}
       <section id="hero" 
-      className="min-h-screen flex flex-col justify-center items-center px-4 relative pt-32">
+      className="min-h-screen flex flex-col justify-center items-center px-4 relative pt-30">
       {/* Saludo inicial */}
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 1, ease: "easeOut" }}
         className="text-4xl md:text-5xl font-semibold mb-6 text-gray-100 tracking-wide text-center"
       >
         Hi there!
@@ -151,7 +151,6 @@ export default function Home() {
           "
         >
           {text}
-          {!typingComplete && <span className="ml-1 animate-blink">_</span>}
         </motion.h1>
 
         {/* Subtítulo (solo aparece cuando termina el typing) */}
@@ -172,7 +171,7 @@ export default function Home() {
             mb-4
           "
           >
-            Software Engineer | FullStack Developer
+            Software Engineer&nbsp;&nbsp;•&nbsp;&nbsp;FullStack Developer
           </motion.h2>
         )}
 
@@ -184,7 +183,7 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-2xl mx-auto mb-4"
           >
-            Busco crear aplicaciones robustas y escalables aplicando las mejores
+            Me enfoco en desarrollar aplicaciones robustas y escalables aplicando las mejores
             prácticas y arquitecturas eficientes.
           </motion.p>
         )}
@@ -204,16 +203,18 @@ export default function Home() {
           </motion.div>
         )}
       </motion.div>
+      {typingComplete && (
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-10 z-10"
+          className="absolute bottom-24 z-10"
         >
           <ChevronDown
             className="h-8 w-8 cursor-pointer"
             onClick={() => scrollToSection("projects")}
           />
         </motion.div>
+      )}
       </section>
 
       {/* Projects Section */}
@@ -254,9 +255,6 @@ export default function Home() {
           </div>
         </div>
       </motion.section>
-
-      {/* Certifications Section
-      <CertificationSection /> */}
 
       {/* Resume Section */}
       <ResumeSection />

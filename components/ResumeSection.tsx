@@ -7,16 +7,17 @@ import GradientButton from "./GradientButton";
 
 const experiences = [
   {
-    title: "Senior Backend Developer",
-    company: "Tech Solutions Inc.",
-    period: "2022 - Presente",
-    description: "Liderazgo técnico en el desarrollo de microservicios y APIs escalables.",
+    title: "Ingeniero de software",
+    company: "Equasystems S.A.S",
+    period: "Julio 2022 - Actualidad",
+    description: "Desarrollé soluciones personalizadas con Node.js y MySQL, implementé reportes en DevExpress/Windows Forms y gestioné versiones en GitHub. Además, optimicé bases de datos, integré APIs y realicé revisiones de código y pruebas unitarias para garantizar la calidad y seguridad de las aplicaciones.",
+    tags: ["Node.js", "MySQL", "ejs", "React", "Express", "Redis", "AWS"],
   },
   {
-    title: "Backend Developer",
-    company: "Digital Innovations",
-    period: "2020 - 2022",
-    description: "Desarrollo de sistemas distribuidos y optimización de bases de datos.",
+    title: "IT Leader",
+    company: "Grant Thornton Ecuador",
+    period: "Noviembre 2020 - Julio 2022",
+    description: "Gestioné plataformas en la nube (Azure AD) y desarrollé aplicaciones web. Implementé y mantuve una aplicación en Node.js/jQuery, potenciada con Angular, para la gestión de recibos electrónicos del SRI.",
   },
 ];
 

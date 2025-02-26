@@ -34,7 +34,7 @@ export default function BackToTopButton() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 p-3 rounded-full bg-white/60 text-black shadow-md ring-1 ring-white/20 hover:bg-white/70 transition-colors z-50"
+          className="fixed bottom-8 right-8 p-3 border border-transparent rounded-full bg-white/50 text-black shadow ring-1 ring-white/10 hover:bg-white/90 transition-colors z-50"
           >
           <ChevronUp className="h-6 w-6" />
         </motion.button>
