@@ -34,7 +34,7 @@ const projects = [
 export default function Home() {
   const [text, setText] = useState("");
   const [typingComplete, setTypingComplete] = useState(false);
-  const phrase = "Erwing Solorzano";
+  const phrase = "I'm Erwing Solorzano";
   const [shiftH1, setShiftH1] = useState(false);
 
   useEffect(() => {
@@ -103,68 +103,89 @@ export default function Home() {
           />
         </motion.div>
         <AnimatedShapes scrollYProgress={smoothProgress} />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/20" />
       </div>
 
 
       {/* Hero Section */}
       <section id="hero" 
       className="min-h-screen flex flex-col justify-center items-center px-4 relative pt-32">
-      {/* Título con efecto de "máquina de escribir" */}
-      <motion.div
-        initial={{ opacity: 0, y: 0 }}
-        animate={{ opacity: 1, y: -20 }}
-        transition={{ duration: 2 }}
-        className="max-w-4xl text-center relative z-10"
+      {/* Saludo inicial */}
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="text-4xl md:text-5xl font-semibold mb-6 text-gray-100 tracking-wide text-center"
       >
-        {/* h1 */}
+        Hi there!
+      </motion.h2>
+
+      {/* Contenedor para el texto principal */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+        className="max-w-4xl mx-auto text-center relative z-10"
+      >
+        {/* Título principal con gradiente */}
         <motion.h1
           variants={{
-            visible: { opacity: 1, y: -10 },
-            shifted: { opacity: 1, y: 0 },
+            visible: { opacity: 1, y: 0 },
+            shifted: { opacity: 1, y: -10 },
           }}
           initial="visible"
           animate={shiftH1 ? "shifted" : "visible"}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="text-5xl md:text-7xl font-bold mb-4 font-[Consolas] relative"
+          className="
+            relative 
+            text-5xl md:text-7xl 
+            font-bold 
+            mb-4
+            font-[Consolas] 
+            bg-gradient-to-r 
+            from-purple-400 
+            to-blue-500 
+            bg-clip-text 
+            text-transparent
+            py-2
+          "
         >
           {text}
-          {!typingComplete && (
-            <span className="ml-1 animate-blink">_</span>
-          )}
+          {!typingComplete && <span className="ml-1 animate-blink">_</span>}
         </motion.h1>
 
-        {/* 2) Solo mostramos los demás elementos si typingComplete === true */}
+        {/* Subtítulo (solo aparece cuando termina el typing) */}
         {typingComplete && (
           <motion.h2
-            className="text-2xl md:text-3xl font-semibold mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 1.2,
-              ease: "easeInOut",
-              delay: 0.2
-            }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+            className="
+            whitespace-nowrap
+            font-semibold
+            text-s       /* Tamaño base en pantallas muy pequeñas */
+            sm:text-m    /* Escala en pantallas 'sm' (640px) */
+            md:text-base  /* Aún más grande en 'md' (768px) */
+            lg:text-lg    /* Y en pantallas mayores */
+            text-gray-300
+            leading-normal
+            mb-4
+          "
           >
-            Full Stack Developer
+            Software Engineer | FullStack Developer
           </motion.h2>
         )}
 
+        {/* Descripción (solo aparece cuando termina el typing) */}
         {typingComplete && (
           <motion.p
-            className="text-xl md:text-2xl text-muted-foreground mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 1.2,
-              ease: "easeInOut",
-              delay: 0.4
-            }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-2xl mx-auto mb-4"
           >
-            Apasionado por construir aplicaciones robustas y escalables, con
-            experiencia en Node.js, diseño de arquitecturas eficientes e
-            implementación de las mejores prácticas de desarrollo tanto en
-            frontend como en backend.
+            Busco crear aplicaciones robustas y escalables aplicando las mejores
+            prácticas y arquitecturas eficientes.
           </motion.p>
         )}
 
