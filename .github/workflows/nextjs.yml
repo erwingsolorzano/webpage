@@ -69,7 +69,10 @@ jobs:
           NEXT_PUBLIC_USER_ID: ${{ secrets.NEXT_PUBLIC_USER_ID }}
         run: |
           # Build Next.js app and then export static HTML
-          ${{ steps.detect-package-manager.outputs.runner }} next build && ${{ steps.detect-package-manager.outputs.runner }} next export
+          ${{ steps.detect-package-manager.outputs.runner }} next build
+          echo "NEXT_PUBLIC_SERVICE_ID=${{secrets.NEXT_PUBLIC_SERVICE_ID}}" >> .env.production
+          echo "NEXT_PUBLIC_TEMPLATE_ID=${{secrets.NEXT_PUBLIC_TEMPLATE_ID}}" >> .env.production
+          echo "NEXT_PUBLIC_USER_ID=${{secrets.NEXT_PUBLIC_USER_ID}}" >> .env.production
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
