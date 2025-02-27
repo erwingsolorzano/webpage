@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import emailjs from "emailjs-com";
 
 const formSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
@@ -26,6 +27,7 @@ const formSchema = z.object({
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [cooldown, setCooldown] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -35,14 +37,30 @@ export default function ContactForm() {
       message: "",
     },
   });
+  const errors = form.formState.errors;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (cooldown) {
+      toast.error("Por favor, espera antes de enviar otro mensaje.");
+      return;
+    }
     setIsSubmitting(true);
-    // Simular envío del formulario
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    toast.success("Mensaje enviado correctamente");
-    form.reset();
+    setCooldown(true);
+
+    try {
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_TEMPLATE_ID!,
+        values,
+        process.env.NEXT_PUBLIC_USER_ID!
+      );
+      toast.success("Mensaje enviado correctamente");
+      form.reset();
+    } catch (error) {
+      toast.error("Hubo un error al enviar el mensaje");
+    }
     setIsSubmitting(false);
+    setTimeout(() => setCooldown(false), 90000);
   };
 
   return (
@@ -50,8 +68,7 @@ export default function ContactForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      // Contenedor con menor padding y altura máxima del 80% de la pantalla
-      className="bg-background p-4 rounded-lg shadow-lg border-2 max-h-[80vh] overflow-y-auto"
+      className="bg-background p-4 rounded-lg shadow-lg border max-h-[80vh] overflow-y-auto"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -64,11 +81,15 @@ export default function ContactForm() {
                 <FormControl>
                   <Input
                     placeholder="Tu nombre"
-                    className="border-2"
                     {...field}
+                    className={`border-2 p-2 rounded ${
+                      errors.name ? "border-red-500" : "border-gray-300"
+                    }`}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-500 text-sm">
+                  {errors.name?.message}
+                </FormMessage>
               </FormItem>
             )}
           />
@@ -82,11 +103,15 @@ export default function ContactForm() {
                   <Input
                     placeholder="tucorreo@ejemplo.com"
                     type="email"
-                    className="border-2"
                     {...field}
+                    className={`border-2 p-2 rounded ${
+                      errors.email ? "border-red-500" : "border-gray-300"
+                    }`}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-500 text-sm">
+                  {errors.email?.message}
+                </FormMessage>
               </FormItem>
             )}
           />
@@ -99,18 +124,21 @@ export default function ContactForm() {
                 <FormControl>
                   <Textarea
                     placeholder="Tu mensaje..."
-                    // Menor altura mínima
-                    className="min-h-[100px] border-2"
                     {...field}
+                    className={`min-h-[100px] border-2 p-2 rounded ${
+                      errors.message ? "border-red-500" : "border-gray-300"
+                    }`}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-500 text-sm">
+                  {errors.message?.message}
+                </FormMessage>
               </FormItem>
             )}
           />
           <Button
             type="submit"
-            className="w-full border-2 hover:bg-primary hover:text-primary-foreground"
+            className="w-full border-2 hover:bg-primary hover:text-primary-foreground transition-colors"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Enviando..." : "Enviar mensaje"}

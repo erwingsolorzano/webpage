@@ -143,8 +143,8 @@ export default function Home() {
             mb-4
             font-[Consolas] 
             bg-gradient-to-r 
-            from-purple-400 
-            to-blue-500 
+            from-purple-500 
+            to-blue-300 
             bg-clip-text 
             text-transparent
             py-2

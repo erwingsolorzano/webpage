@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
+import { Toaster } from "sonner";
 
 const isProd = process.env.NODE_ENV === "production"
 const basePath = isProd ? "/webpage" : ""
@@ -29,6 +30,7 @@ export default function RootLayout({
           enableSystem={false}
         >
           {children}
+          <Toaster position="top-center" />
         </ThemeProvider>
       </body>
     </html>

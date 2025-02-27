@@ -3,23 +3,23 @@
 import { motion } from "framer-motion";
 import { Briefcase, Download, GraduationCap, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import GradientButton from "./GradientButton";
 
 const experiences = [
   {
     title: "Ingeniero de software",
     company: "Equasystems S.A.S",
-    period: "Julio 2022 - Actualidad",
+    period: "2022 - Actualidad",
     description: "Desarrollé soluciones personalizadas con Node.js y MySQL, implementé reportes en DevExpress/Windows Forms y gestioné versiones en GitHub. Además, optimicé bases de datos, integré APIs y realicé revisiones de código y pruebas unitarias para garantizar la calidad y seguridad de las aplicaciones.",
     tags: ["Node.js", "MySQL", "ejs", "React", "Express", "Redis", "AWS"],
   },
   {
     title: "IT Leader",
     company: "Grant Thornton Ecuador",
-    period: "Noviembre 2020 - Julio 2022",
+    period: "2020 - 2022",
     description: "Gestioné plataformas en la nube (Azure AD) y desarrollé aplicaciones web. Implementé y mantuve una aplicación en Node.js/jQuery, potenciada con Angular, para la gestión de recibos electrónicos del SRI.",
   },
 ];
+const cvURL = "https://drive.google.com/file/d/18p7Ud7s9ewr6Gy55obNY7bnFfAvrFLO_/view?usp=sharing";
 
 export default function ResumeSection() {
   return (
@@ -41,9 +41,12 @@ export default function ResumeSection() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">Experiencia Profesional</h2>
-          <GradientButton href="https://drive.google.com/file/d/18p7Ud7s9ewr6Gy55obNY7bnFfAvrFLO_/view?usp=sharing" icon={Download}>
-              Descargar CV
-            </GradientButton>
+            <Button variant="outline" asChild className="border-4 hover:bg-primary hover:text-primary-foreground shadow">
+            <a href={cvURL} target="_blank" rel="noopener noreferrer">
+              <Download className="mr-2 h-4 w-4" />
+              Download CV
+            </a>
+          </Button>
         </motion.div>
 
         <div className="space-y-12">
