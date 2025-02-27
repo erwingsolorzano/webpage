@@ -46,7 +46,9 @@ export default function ContactForm() {
     }
     setIsSubmitting(true);
     setCooldown(true);
-
+    console.log('🚬 ===> onSubmit ===> process.env.NEXT_PUBLIC_USER_ID:', process.env.NEXT_PUBLIC_USER_ID);
+    console.log('🚬 ===> onSubmit ===> process.env.NEXT_PUBLIC_TEMPLATE_ID:', process.env.NEXT_PUBLIC_TEMPLATE_ID);
+    console.log('🚬 ===> onSubmit ===> process.env.NEXT_PUBLIC_SERVICE_ID:', process.env.NEXT_PUBLIC_SERVICE_ID);
     try {
       await emailjs.send(
         process.env.NEXT_PUBLIC_SERVICE_ID!,
