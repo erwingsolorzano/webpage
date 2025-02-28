@@ -207,7 +207,7 @@ export default function Home() {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-24 z-10"
+          className="absolute bottom-10 z-10"
         >
           <ChevronDown
             className="h-8 w-8 cursor-pointer"
