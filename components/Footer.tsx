@@ -13,7 +13,7 @@ export default function Footer() {
       className="bg-black/80 backdrop-blur-sm py-8 px-4 relative z-10 border-t border-white/10"
     >
       <div className="max-w-6xl mx-auto text-center text-sm text-gray-400">
-        <p>© {currentYear} Erwing Solorzano. All rights reserved.</p>
+        <p>© {currentYear} Erwing Solorzano.</p>
       </div>
     </motion.footer>
   );

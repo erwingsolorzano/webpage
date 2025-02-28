@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
+import { Send } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -59,7 +60,7 @@ export default function ContactForm() {
       toast.error("Hubo un error al enviar el mensaje");
     }
     setIsSubmitting(false);
-    setTimeout(() => setCooldown(false), 90000);
+    setTimeout(() => setCooldown(false), 60000);
   };
 
   return (
@@ -135,12 +136,33 @@ export default function ContactForm() {
               </FormItem>
             )}
           />
-          <Button
+          <Button 
             type="submit"
-            className="w-full border-2 hover:bg-primary hover:text-primary-foreground transition-colors"
             disabled={isSubmitting}
+            className={`relative overflow-hidden w-full border-2 transition-colors ${
+              isSubmitting
+                ? "bg-black text-white border-black"
+                : "hover:bg-black hover:text-white"
+            }`}
           >
-            {isSubmitting ? "Enviando..." : "Enviar mensaje"}
+            <Send className="mr-2 h-4 w-4" />
+            <span className="relative z-10 block text-center">
+              {isSubmitting ? "Enviando..." : "Enviar mensaje"}
+            </span>
+            {isSubmitting && (
+              <motion.div
+                className="absolute bottom-0 h-1 bg-white w-full"
+                style={{ transformOrigin: "center" }}
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{
+                  ease: "easeInOut",
+                  duration: 1,
+                  repeat: Infinity,
+                  repeatType: "loop",
+                }}      
+              />
+            )}
           </Button>
         </form>
       </Form>

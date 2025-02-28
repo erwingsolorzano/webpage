@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { Briefcase, Download, GraduationCap, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+const MotionButton = motion(Button);
+
 const experiences = [
   {
     title: "Ingeniero de software",
@@ -41,12 +43,31 @@ export default function ResumeSection() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">Experiencia Profesional</h2>
-            <Button variant="outline" asChild className="border-4 hover:bg-primary hover:text-primary-foreground shadow">
+          <MotionButton
+            variant="outline"
+            asChild
+            className="border-4 hover:bg-primary hover:text-primary-foreground shadow"
+            // Animación de "glow" directamente en el botón
+            initial={{ boxShadow: "0 0 0 rgba(255, 255, 255, 0)" }}
+            animate={{
+              boxShadow: [
+                "0 0 0 rgba(255, 255, 255, 0)",
+                "0 0 15px 5px rgba(255, 255, 255, 0.5)",
+                "0 0 0 rgba(255, 255, 255, 0)"
+              ]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "loop",
+            }}
+          >
             <a href={cvURL} target="_blank" rel="noopener noreferrer">
               <Download className="mr-2 h-4 w-4" />
               Download CV
             </a>
-          </Button>
+          </MotionButton>
+
         </motion.div>
 
         <div className="space-y-12">
