@@ -121,8 +121,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
           >
-            Más de 3 años de experiencia en diseño y desarrollo de aplicaciones web, experto en crear
-            aplicaciones robustas y escalables aplicando las mejores prácticas de programación.
+            Más de 3 años de experiencia en diseño y desarrollo de aplicaciones web, busco brindar soluciones escalables y de alto rendimiento, priorizando buenas prácticas.
           </motion.p>
 
           {/* Botones de redes sociales */}
