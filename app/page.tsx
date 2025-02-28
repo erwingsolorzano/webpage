@@ -9,8 +9,10 @@ import ProjectCard from "@/components/ProjectCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BackToTopButton from "@/components/BackToTopButton";
-import Image from "next/image";
 import SocialButtons from "@/components/SocialButtons";
+import FlipProfile from "@/components/FlipProfile";
+
+import Image from "next/image";
 import dynamic from "next/dynamic";
 
 const isProd = process.env.NODE_ENV === "production";
@@ -70,7 +72,7 @@ export default function Home() {
           />
         </motion.div>
         <AnimatedShapes scrollYProgress={smoothProgress} />
-        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
       {/* Hero Section */}
@@ -84,6 +86,12 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
+          <div className="max-w-lg w-full mx-auto flex flex-col items-center">
+            <FlipProfile
+              className="mx-auto w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 max-w-[8rem] max-h-[8rem] mb-4"
+            />
+            {/* Resto del contenido: títulos, texto, social buttons */}
+          </div>
           {/* Saludo */}
           <motion.h2
             className="text-4xl md:text-5xl font-semibold mb-4 text-gray-100 tracking-wide text-center"
