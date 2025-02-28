@@ -1,8 +1,8 @@
-"use client";
+"use client"; 
 
 import { ChevronDown } from "lucide-react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import ContactForm from "@/components/ContactForm";
 import ProjectCard from "@/components/ProjectCard";
@@ -13,13 +13,12 @@ import Image from "next/image";
 import SocialButtons from "@/components/SocialButtons";
 import dynamic from "next/dynamic";
 
-const isProd = process.env.NODE_ENV === "production"
-const basePath = isProd ? "/webpage" : ""
+const isProd = process.env.NODE_ENV === "production";
+const basePath = isProd ? "/webpage" : "";
 
 const AnimatedShapes = dynamic(() => import("@/components/AnimatedShapes"), { ssr: false });
 const ResumeSection = dynamic(() => import("@/components/ResumeSection"), { ssr: false });
 const TechStack = dynamic(() => import("@/components/TechStack"), { ssr: false });
-
 
 const projects = [
   {
@@ -32,40 +31,10 @@ const projects = [
 ];
 
 export default function Home() {
-  const [text, setText] = useState("");
-  const [typingComplete, setTypingComplete] = useState(false);
-  const phrase = "I'm Erwing Solórzano";
-  const [shiftH1, setShiftH1] = useState(false);
-
+  // Al cargar la página se hace scroll al tope
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
-  // Efecto de "máquina de escribir"
-  useEffect(() => {
-    let index = 0;
-    setText("");
-    const interval = setInterval(() => {
-      if (index <= phrase.length) {
-        setText(phrase.substring(0, index));
-        index++;
-      } else {
-        clearInterval(interval);
-        setTypingComplete(true);
-      }
-    }, 80);
-    return () => clearInterval(interval);
-  }, []);
-
-    // Una vez terminado el typing, con un retardo, animamos el h1 hacia arriba
-    useEffect(() => {
-      if (typingComplete) {
-        const timer = setTimeout(() => {
-          setShiftH1(true);
-        }, 500); // Retardo de 800ms, ajustable a tu gusto
-        return () => clearTimeout(timer);
-      }
-    }, [typingComplete]);
 
   // Para scroll suave a secciones
   const scrollToSection = (id: string) => {
@@ -74,17 +43,15 @@ export default function Home() {
   };
 
   // Parallax
-  // 1) Medir el scroll de toda la página en lugar de un target específico:
   const { scrollYProgress } = useScroll();
   const springConfig = { stiffness: 20, damping: 8, restDelta: 0.001 };
-
   const smoothProgress = useSpring(scrollYProgress, springConfig);
 
   return (
     <main className="min-h-screen relative">
       <Navbar />
 
-      {/* Contenedor del parallax con posición fija y z-[-10] */}
+      {/* Contenedor del parallax */}
       <div className="fixed inset-0 -z-10 pointer-events-none">
         <motion.div
           style={{
@@ -106,104 +73,70 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/20" />
       </div>
 
-
       {/* Hero Section */}
-      <section id="hero" 
-      className="min-h-screen flex flex-col justify-center items-center px-4 relative pt-20">
-      {/* Saludo inicial */}
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="text-4xl md:text-5xl font-semibold mb-4 text-gray-100 tracking-wide text-center"
+      <section
+        id="hero"
+        className="min-h-screen flex flex-col justify-center items-center px-4 relative pt-20"
       >
-        Hi there!
-      </motion.h2>
-
-      {/* Contenedor para el texto principal */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-        className="max-w-4xl mx-auto text-center relative z-10"
-      >
-        {/* Título principal con gradiente */}
-        <motion.h1
-          variants={{
-            visible: { opacity: 1, y: 0 },
-            shifted: { opacity: 1, y: -10 },
-          }}
-          initial="visible"
-          animate={shiftH1 ? "shifted" : "visible"}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="
-            relative 
-            text-5xl md:text-7xl 
-            font-bold 
-            mb-2
-            font-[Consolas] 
-            bg-gradient-to-r 
-            from-purple-500 
-            to-blue-300 
-            bg-clip-text 
-            text-transparent
-            py-2
-          "
+        <motion.div
+          className="max-w-4xl text-center relative z-10"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          {text}
-        </motion.h1>
-
-        {/* Subtítulo (solo aparece cuando termina el typing) */}
-        {typingComplete && (
+          {/* Saludo */}
           <motion.h2
+            className="text-4xl md:text-5xl font-semibold mb-4 text-gray-100 tracking-wide text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-            className="
-            whitespace-nowrap
-            font-semibold
-            text-s       /* Tamaño base en pantallas muy pequeñas */
-            sm:text-m    /* Escala en pantallas 'sm' (640px) */
-            md:text-base  /* Aún más grande en 'md' (768px) */
-            lg:text-lg    /* Y en pantallas mayores */
-            text-gray-300
-            leading-normal
-            mb-4
-          "
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
           >
-            Software Engineer&nbsp;&nbsp;•&nbsp;&nbsp;FullStack Developer
+            Hi there!
           </motion.h2>
-        )}
-
-        {/* Descripción (solo aparece cuando termina el typing) */}
-        {typingComplete && (
-          <motion.p
+          
+          {/* Título principal */}
+          <motion.h1
+            className="text-5xl md:text-7xl font-bold mb-2 font-[Consolas] bg-gradient-to-r from-purple-500 to-blue-300 bg-clip-text text-transparent py-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-2xl mx-auto mb-4"
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
           >
-            Más de 3 años de experiencia en diseño y desarrollo de aplicaciones web, experto en crear aplicaciones robustas y escalables aplicando las mejores
-            prácticas de programación.
-          </motion.p>
-        )}
+            I'm Erwing Solórzano
+          </motion.h1>
 
-        {typingComplete && (
+          {/* Subtítulo */}
+          <motion.h2
+            className="whitespace-nowrap font-semibold text-sm sm:text-base md:text-lg text-gray-300 leading-normal mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+          >
+            Software Engineer • FullStack Developer
+          </motion.h2>
+
+          {/* Descripción */}
+          <motion.p
+            className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-2xl mx-auto mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
+          >
+            Más de 3 años de experiencia en diseño y desarrollo de aplicaciones web, experto en crear
+            aplicaciones robustas y escalables aplicando las mejores prácticas de programación.
+          </motion.p>
+
+          {/* Botones de redes sociales */}
           <motion.div
             className="flex gap-4 justify-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 1.2,
-              ease: "easeInOut",
-              delay: 0.6
-            }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 1.0 }}
           >
-              <SocialButtons />
+            <SocialButtons />
           </motion.div>
-        )}
-      </motion.div>
-      {typingComplete && (
+        </motion.div>
+
+        {/* Chevron para scroll hacia abajo */}
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
@@ -214,7 +147,6 @@ export default function Home() {
             onClick={() => scrollToSection("projects")}
           />
         </motion.div>
-      )}
       </section>
 
       {/* Projects Section */}
@@ -313,7 +245,7 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Cursor parpadeante */}
+      {/* Cursor parpadeante (puedes eliminarlo si ya no es necesario) */}
       <style jsx global>{`
         @keyframes blink {
           0%,
