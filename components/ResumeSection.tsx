@@ -31,7 +31,7 @@ export default function ResumeSection() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.4 }}
       variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } }}
     >
       <div className="max-w-6xl mx-auto">
@@ -40,7 +40,7 @@ export default function ResumeSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">Experiencia Profesional</h2>
           <MotionButton
