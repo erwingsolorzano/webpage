@@ -109,13 +109,13 @@ export default function Home() {
 
       {/* Hero Section */}
       <section id="hero" 
-      className="min-h-screen flex flex-col justify-center items-center px-4 relative pt-30">
+      className="min-h-screen flex flex-col justify-center items-center px-4 relative pt-20">
       {/* Saludo inicial */}
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="text-4xl md:text-5xl font-semibold mb-6 text-gray-100 tracking-wide text-center"
+        className="text-4xl md:text-5xl font-semibold mb-4 text-gray-100 tracking-wide text-center"
       >
         Hi there!
       </motion.h2>
@@ -140,7 +140,7 @@ export default function Home() {
             relative 
             text-5xl md:text-7xl 
             font-bold 
-            mb-4
+            mb-2
             font-[Consolas] 
             bg-gradient-to-r 
             from-purple-500 
@@ -183,8 +183,8 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-2xl mx-auto mb-4"
           >
-            Me enfoco en desarrollar aplicaciones robustas y escalables aplicando las mejores
-            prácticas y arquitecturas eficientes.
+            Más de 3 años de experiencia en diseño y desarrollo de aplicaciones web, experto en crear aplicaciones robustas y escalables aplicando las mejores
+            prácticas de programación.
           </motion.p>
         )}
 
@@ -220,7 +220,7 @@ export default function Home() {
       {/* Projects Section */}
       <motion.section
         id="projects"
-        className="py-32 px-4 bg-background/45 relative z-10"
+        className="py-36 px-4 bg-background/45 relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -262,7 +262,7 @@ export default function Home() {
       {/* Tech Stack Section */}
       <motion.section
         id="tech-stack"
-        className="bg-background/49 py-32 px-4 relative z-10"
+        className="bg-background/49 py-40 px-4 relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
