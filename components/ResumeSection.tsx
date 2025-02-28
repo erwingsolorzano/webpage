@@ -46,7 +46,7 @@ export default function ResumeSection() {
           <MotionButton
             variant="outline"
             asChild
-            className="border-4 hover:bg-primary hover:text-primary-foreground shadow"
+            className="border-2 hover:bg-primary hover:text-primary-foreground shadow"
             // Animación de "glow" directamente en el botón
             initial={{ boxShadow: "0 0 0 rgba(255, 255, 255, 0)" }}
             animate={{
