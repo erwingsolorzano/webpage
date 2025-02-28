@@ -60,7 +60,7 @@ export default function ContactForm() {
       form.reset();
     } catch (error) {
       console.log('🚬 ===> onSubmit ===> error:', error);
-      toast.error("Hubo un error al enviar el mensaje");
+      toast.error("Hubo un error al enviar el mensaje",error);
     }
     setIsSubmitting(false);
     setTimeout(() => setCooldown(false), 90000);
