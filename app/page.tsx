@@ -44,7 +44,7 @@ export default function Home() {
 
   // Parallax
   const { scrollYProgress } = useScroll();
-  const springConfig = { stiffness: 20, damping: 8, restDelta: 0.001 };
+  const springConfig = { restDelta: 0 };
   const smoothProgress = useSpring(scrollYProgress, springConfig);
 
   return (
@@ -55,10 +55,10 @@ export default function Home() {
       <div className="fixed inset-0 -z-10 pointer-events-none">
         <motion.div
           style={{
-            y: useTransform(smoothProgress, [0, 1], ["0%", "-70%"]),
             opacity: useTransform(smoothProgress, [0, 0.5], [1, 0]),
             willChange: "transform",
           }}
+          transition={{ type: "spring", stiffness: 100 }}
           className="absolute inset-0 h-[220%] w-full"
         >
           <Image
