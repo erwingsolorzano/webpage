@@ -41,7 +41,7 @@ export default function Home() {
   
   const heroScale = useTransform(scrollY, [0, 500], [1, 0.75]);
   const heroOpacity = useTransform(scrollY, [0, 500], [1, 0]);
-  const springConfig = { mass: 0.5, stiffness: 100, damping: 30 };
+  const springConfig = { mass: 0.5, stiffness: 100, damping: 10 };
   
   const smoothScale = useSpring(heroScale, springConfig);
   const smoothOpacity = useSpring(heroOpacity, springConfig);
