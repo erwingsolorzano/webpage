@@ -2,7 +2,7 @@
 
 import { ChevronDown } from "lucide-react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import ContactForm from "@/components/ContactForm";
 import ProjectCard from "@/components/ProjectCard";
@@ -31,27 +31,32 @@ const projects = [
 ];
 
 export default function Home() {
-  // Al cargar la página se hace scroll al tope
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollY } = useScroll();
+  
+  const heroScale = useTransform(scrollY, [0, 500], [1, 0.75]);
+  const heroOpacity = useTransform(scrollY, [0, 500], [1, 0]);
+  const springConfig = { mass: 0.5, stiffness: 100, damping: 30 };
+  
+  const smoothScale = useSpring(heroScale, springConfig);
+  const smoothOpacity = useSpring(heroOpacity, springConfig);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Para scroll suave a secciones
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Parallax
   const { scrollYProgress } = useScroll();
-  const springConfig = { restDelta: 0 };
-  const smoothProgress = useSpring(scrollYProgress, springConfig);
+  const smoothProgress = useSpring(scrollYProgress, { restDelta: 0 });
 
   return (
     <main className="min-h-screen relative">
       <Navbar />
 
-      {/* Contenedor del parallax */}
       <div className="fixed inset-0 -z-10 pointer-events-none">
         <motion.div
           style={{
@@ -73,10 +78,14 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/20" />
       </div>
 
-      {/* Hero Section */}
-      <section
+      <motion.section
+        ref={heroRef}
         id="hero"
         className="min-h-screen flex flex-col justify-center items-center px-4 relative pt-20"
+        style={{
+          scale: smoothScale,
+          opacity: smoothOpacity,
+        }}
       >
         <motion.div
           className="max-w-4xl text-center relative z-10"
@@ -84,7 +93,6 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          {/* Saludo */}
           <motion.h2
             className="text-4xl md:text-5xl font-semibold mb-4 text-gray-100 tracking-wide text-center"
             initial={{ opacity: 0, y: 20 }}
@@ -94,7 +102,6 @@ export default function Home() {
             Hi there!
           </motion.h2>
           
-          {/* Título principal */}
           <motion.h1
             className="text-5xl md:text-7xl font-bold mb-2 font-[Consolas] bg-gradient-to-r from-purple-500 to-blue-300 bg-clip-text text-transparent py-2"
             initial={{ opacity: 0, y: 20 }}
@@ -104,7 +111,6 @@ export default function Home() {
             I'm Erwing Solórzano
           </motion.h1>
 
-          {/* Subtítulo */}
           <motion.h2
             className="whitespace-nowrap font-semibold text-sm sm:text-base md:text-lg text-gray-300 leading-normal mb-4"
             initial={{ opacity: 0, y: 20 }}
@@ -114,7 +120,6 @@ export default function Home() {
             Software Engineer • FullStack Developer
           </motion.h2>
 
-          {/* Descripción */}
           <motion.p
             className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-2xl mx-auto mb-4"
             initial={{ opacity: 0, y: 20 }}
@@ -124,7 +129,6 @@ export default function Home() {
             Más de 3 años de experiencia en diseño y desarrollo de aplicaciones web, busco brindar soluciones escalables y de alto rendimiento, priorizando buenas prácticas.
           </motion.p>
 
-          {/* Botones de redes sociales */}
           <motion.div
             className="flex gap-4 justify-center mb-12"
             initial={{ opacity: 0, y: 20 }}
@@ -135,7 +139,6 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        {/* Chevron para scroll hacia abajo */}
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
@@ -146,9 +149,8 @@ export default function Home() {
             onClick={() => scrollToSection("projects")}
           />
         </motion.div>
-      </section>
+      </motion.section>
 
-      {/* Projects Section */}
       <motion.section
         id="projects"
         className="py-36 px-4 bg-background/45 relative z-10"
@@ -187,10 +189,8 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Resume Section */}
       <ResumeSection />
 
-      {/* Tech Stack Section */}
       <motion.section
         id="tech-stack"
         className="bg-background/49 py-40 px-4 relative z-10"
@@ -217,7 +217,6 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Contact Section */}
       <motion.section
         id="contact"
         className="bg-background/49.5 py-32 px-4 relative z-10"
@@ -244,7 +243,6 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Cursor parpadeante (puedes eliminarlo si ya no es necesario) */}
       <style jsx global>{`
         @keyframes blink {
           0%,
@@ -260,8 +258,6 @@ export default function Home() {
         }
       `}</style>
       <Footer />
-
-      {/* Botón de "Volver al inicio" */}
       <BackToTopButton />
     </main>
   );
