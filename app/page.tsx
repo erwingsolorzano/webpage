@@ -3,6 +3,8 @@
 import { ChevronDown } from "lucide-react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import ContactForm from "@/components/ContactForm";
 import ProjectCard from "@/components/ProjectCard";
@@ -30,8 +32,11 @@ const projects = [
   },
 ];
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
   
   const heroScale = useTransform(scrollY, [0, 500], [1, 0.75]);
@@ -43,6 +48,37 @@ export default function Home() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // Hero section zoom and fade animation
+    gsap.fromTo(heroRef.current,
+      { scale: 1, opacity: 1 },
+      {
+        scale: 0.8,
+        opacity: 0,
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1,
+        }
+      }
+    );
+
+    // Contact section reveal animation
+    gsap.fromTo(contactRef.current,
+      { y: 100, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        scrollTrigger: {
+          trigger: contactRef.current,
+          start: "top bottom",
+          end: "top center",
+          scrub: 1,
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
   }, []);
 
   const scrollToSection = (id: string) => {
@@ -218,6 +254,7 @@ export default function Home() {
       </motion.section>
 
       <motion.section
+        ref={contactRef}
         id="contact"
         className="bg-background/49.5 py-32 px-4 relative z-10"
         initial="hidden"
