@@ -135,7 +135,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
           >
-            Hi there!
+            Hola!
           </motion.h2>
           
           <motion.h1
@@ -144,7 +144,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
           >
-            I'm Erwing Solórzano
+            Soy Erwing Solórzano
           </motion.h1>
 
           <motion.h2
@@ -153,7 +153,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
           >
-            Software Engineer • FullStack Developer
+            Ingeniero de software • Desarrollador fullstack
           </motion.h2>
 
           <motion.p
@@ -162,7 +162,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
           >
-            Más de 3 años de experiencia en diseño y desarrollo de aplicaciones web, busco brindar soluciones escalables y de alto rendimiento, priorizando buenas prácticas.
+            Con más de 3 años de experiencia en diseño y desarrollo de aplicaciones web, busco brindar soluciones escalables y de alto rendimiento, priorizando buenas prácticas.
           </motion.p>
 
           <motion.div
