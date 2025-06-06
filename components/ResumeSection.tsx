@@ -192,7 +192,7 @@ export default function ResumeSection() {
                     )}
                     
                     <div className="flex flex-wrap gap-2">
-                      {exp.tags.map((tag) => (
+                      {exp.tags?.map((tag) => (
                         <span
                           key={tag}
                           className="px-3 py-1 text-xs font-medium bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-white rounded-full border border-white/10"
