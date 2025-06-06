@@ -261,7 +261,7 @@ export default function Home() {
               delay: 0.8
             }}
           >
-            Software Engineer • FullStack Developer
+            Ingeniero de software • Desarrollador Full Stack
           </motion.h2>
 
           <motion.p
