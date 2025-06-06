@@ -39,79 +39,129 @@ export default function Home() {
   const contactRef = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
   
-  const heroScale = useTransform(scrollY, [0, 500], [1, 0.75]);
-  const heroOpacity = useTransform(scrollY, [0, 500], [1, 0]);
-  const springConfig = { mass: 0.5, stiffness: 100, damping: 10 };
+  // Smoother spring configurations
+  const springConfig = { 
+    mass: 0.1, 
+    stiffness: 400, 
+    damping: 40,
+    restDelta: 0.001
+  };
   
-  const smoothScale = useSpring(heroScale, springConfig);
-  const smoothOpacity = useSpring(heroOpacity, springConfig);
+  // Hero parallax effects
+  const heroY = useTransform(scrollY, [0, 800], [0, -200]);
+  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
+  const heroScale = useTransform(scrollY, [0, 400], [1, 0.8]);
+  
+  // Background fade effect
+  const backgroundOpacity = useTransform(scrollY, [0, 600], [1, 0]);
+  
+  // Apply spring to all transforms
+  const smoothHeroY = useSpring(heroY, springConfig);
+  const smoothHeroOpacity = useSpring(heroOpacity, springConfig);
+  const smoothHeroScale = useSpring(heroScale, springConfig);
+  const smoothBackgroundOpacity = useSpring(backgroundOpacity, springConfig);
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    // Hero section zoom and fade animation
-    gsap.fromTo(heroRef.current,
-      { scale: 1, opacity: 1 },
+    // Smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+
+    // Enhanced GSAP animations with smoother easing
+    gsap.set("*", { willChange: "auto" });
+    
+    // Stagger animations for better performance
+    gsap.fromTo(".hero-element", 
+      { 
+        opacity: 0, 
+        y: 60,
+        scale: 0.9
+      },
       {
-        scale: 0.8,
-        opacity: 0,
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 1,
-        }
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 1.2,
+        ease: "power3.out",
+        stagger: 0.15,
+        delay: 0.3
       }
     );
 
-    // Contact section reveal animation
+    // Contact section reveal with better easing
     gsap.fromTo(contactRef.current,
-      { y: 100, opacity: 0 },
+      { 
+        y: 100, 
+        opacity: 0,
+        scale: 0.95
+      },
       {
         y: 0,
         opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: "power3.out",
         scrollTrigger: {
           trigger: contactRef.current,
-          start: "top bottom",
-          end: "top center",
-          scrub: 1,
+          start: "top 80%",
+          end: "top 50%",
           toggleActions: "play none none reverse"
         }
       }
     );
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
   }, []);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: "smooth" });
+    element?.scrollIntoView({ 
+      behavior: "smooth",
+      block: "start"
+    });
   };
 
   const { scrollYProgress } = useScroll();
-  const smoothProgress = useSpring(scrollYProgress, { restDelta: 0 });
+  const smoothProgress = useSpring(scrollYProgress, springConfig);
 
   return (
-    <main className="min-h-screen relative">
+    <main className="min-h-screen relative overflow-hidden">
       <Navbar />
 
-      <div className="fixed inset-0 -z-10 pointer-events-none">
+      {/* Apple-style gradient background with scroll fade */}
+      <div className="fixed inset-0 -z-20">
         <motion.div
-          style={{
-            opacity: useTransform(smoothProgress, [0, 0.5], [1, 0]),
-            willChange: "transform",
+          style={{ opacity: smoothBackgroundOpacity }}
+          className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+        />
+        <motion.div
+          style={{ opacity: smoothBackgroundOpacity }}
+          className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"
+        />
+        {/* Subtle animated gradient overlay */}
+        <motion.div
+          animate={{
+            background: [
+              "radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%)",
+              "radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%)",
+              "radial-gradient(circle at 40% 80%, rgba(119, 198, 255, 0.3) 0%, transparent 50%)",
+              "radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%)"
+            ]
           }}
-          transition={{ type: "spring", stiffness: 100 }}
-          className="absolute inset-0 h-[220%] w-full"
-        >
-          <Image
-            src={`${basePath}/tiny-bg.webp`}
-            alt="Fondo parallax"
-            fill
-            className="object-cover"
-            priority
-          />
-        </motion.div>
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute inset-0"
+        />
+      </div>
+
+      {/* Animated shapes with better performance */}
+      <div className="fixed inset-0 -z-10 pointer-events-none">
         <AnimatedShapes scrollYProgress={smoothProgress} />
-        <div className="absolute inset-0 bg-black/20" />
       </div>
 
       <motion.section
@@ -119,104 +169,187 @@ export default function Home() {
         id="hero"
         className="min-h-screen flex flex-col justify-center items-center px-4 relative pt-20"
         style={{
-          scale: smoothScale,
-          opacity: smoothOpacity,
+          y: smoothHeroY,
+          opacity: smoothHeroOpacity,
+          scale: smoothHeroScale,
         }}
       >
         <motion.div
           className="max-w-4xl text-center relative z-10"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <motion.h2
-            className="text-4xl md:text-5xl font-semibold mb-4 text-gray-100 tracking-wide text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
+          {/* Profile Picture */}
+          <motion.div
+            className="hero-element mb-8 flex justify-center"
+            initial={{ opacity: 0, scale: 0.5, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ 
+              duration: 1,
+              ease: [0.25, 0.46, 0.45, 0.94],
+              delay: 0.2
+            }}
           >
-            Hola!
+            <div className="relative">
+              <motion.div
+                className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl backdrop-blur-sm"
+                whileHover={{ 
+                  scale: 1.05,
+                  borderColor: "rgba(255, 255, 255, 0.4)"
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                <Image
+                  src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg"
+                  alt="Erwing Solórzano"
+                  width={160}
+                  height={160}
+                  className="w-full h-full object-cover"
+                  priority
+                />
+              </motion.div>
+              {/* Glow effect */}
+              <motion.div
+                className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/30 to-blue-500/30 blur-xl"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.3, 0.6, 0.3]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </div>
+          </motion.div>
+          
+          <motion.h2
+            className="hero-element text-3xl md:text-4xl font-light mb-4 text-gray-100 tracking-wide"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 0.8, 
+              ease: [0.25, 0.46, 0.45, 0.94],
+              delay: 0.4
+            }}
+          >
+            Hello, I'm
           </motion.h2>
           
           <motion.h1
-            className="text-5xl md:text-7xl font-bold mb-2 font-[Consolas] bg-gradient-to-r from-purple-500 to-blue-300 bg-clip-text text-transparent py-2"
-            initial={{ opacity: 0, y: 20 }}
+            className="hero-element text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent leading-tight"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+            transition={{ 
+              duration: 0.8, 
+              ease: [0.25, 0.46, 0.45, 0.94],
+              delay: 0.6
+            }}
           >
-            Soy Erwing Solórzano
+            Erwing Solórzano
           </motion.h1>
 
           <motion.h2
-            className="whitespace-nowrap font-semibold text-sm sm:text-base md:text-lg text-gray-300 leading-normal mb-4"
-            initial={{ opacity: 0, y: 20 }}
+            className="hero-element text-xl md:text-2xl font-light text-gray-300 mb-8 tracking-wide"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+            transition={{ 
+              duration: 0.8, 
+              ease: [0.25, 0.46, 0.45, 0.94],
+              delay: 0.8
+            }}
           >
-            Ingeniero de software • Desarrollador fullstack
+            Software Engineer • FullStack Developer
           </motion.h2>
 
           <motion.p
-            className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-2xl mx-auto mb-4"
-            initial={{ opacity: 0, y: 20 }}
+            className="hero-element text-lg md:text-xl text-gray-400 leading-relaxed max-w-3xl mx-auto mb-12 font-light"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
+            transition={{ 
+              duration: 0.8, 
+              ease: [0.25, 0.46, 0.45, 0.94],
+              delay: 1.0
+            }}
           >
-            Con más de 3 años de experiencia en diseño y desarrollo de aplicaciones web, busco brindar soluciones escalables y de alto rendimiento, priorizando buenas prácticas.
+            Con más de 3 años de experiencia en diseño y desarrollo de aplicaciones web, 
+            busco brindar soluciones escalables y de alto rendimiento, priorizando buenas prácticas 
+            y experiencias de usuario excepcionales.
           </motion.p>
 
           <motion.div
-            className="flex gap-4 justify-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
+            className="hero-element flex gap-6 justify-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 1.0 }}
+            transition={{ 
+              duration: 0.8, 
+              ease: [0.25, 0.46, 0.45, 0.94],
+              delay: 1.2
+            }}
           >
             <SocialButtons />
           </motion.div>
         </motion.div>
 
         <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          animate={{ 
+            y: [0, 12, 0],
+            opacity: [0.7, 1, 0.7]
+          }}
+          transition={{ 
+            duration: 2.5, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
           className="absolute bottom-10 z-10"
         >
-          <ChevronDown
-            className="h-8 w-8 cursor-pointer"
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => scrollToSection("projects")}
-          />
+            className="cursor-pointer p-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
+          >
+            <ChevronDown className="h-6 w-6 text-white" />
+          </motion.div>
         </motion.div>
       </motion.section>
 
       <motion.section
         id="projects"
-        className="py-36 px-4 bg-background/45 relative z-10"
+        className="py-24 px-4 bg-black/40 backdrop-blur-sm relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
         variants={{
-          hidden: { opacity: 0, y: 50 },
+          hidden: { opacity: 0, y: 60 },
           visible: { opacity: 1, y: 0 },
         }}
       >
         <div className="max-w-6xl mx-auto">
           <motion.h2
-            className="text-4xl md:text-5xl font-bold mb-16 text-center"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-4xl md:text-5xl font-bold mb-16 text-center bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            Proyectos Destacados
+            Featured Projects
           </motion.h2>
           <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 place-items-center">
             {projects.map((project, index) => (
               <motion.div
                 key={project.title}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 60, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.2 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: index * 0.2,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
               >
                 <ProjectCard {...project} />
               </motion.div>
@@ -229,25 +362,25 @@ export default function Home() {
 
       <motion.section
         id="tech-stack"
-        className="bg-background/49 py-40 px-4 relative z-10"
+        className="bg-black/40 backdrop-blur-sm py-24 px-4 relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
         variants={{
-          hidden: { opacity: 0, y: 50 },
+          hidden: { opacity: 0, y: 60 },
           visible: { opacity: 1, y: 0 },
         }}
       >
         <div className="max-w-6xl mx-auto">
           <motion.h2
-            className="text-4xl md:text-5xl font-bold mb-16 text-center"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-4xl md:text-5xl font-bold mb-16 text-center bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            Stack Tecnológico
+            Tech Stack
           </motion.h2>
           <TechStack />
         </div>
@@ -256,44 +389,30 @@ export default function Home() {
       <motion.section
         ref={contactRef}
         id="contact"
-        className="bg-background/49.5 py-32 px-4 relative z-10"
+        className="bg-black/40 backdrop-blur-sm py-24 px-4 relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
         variants={{
-          hidden: { opacity: 0, y: 50 },
+          hidden: { opacity: 0, y: 60 },
           visible: { opacity: 1, y: 0 },
         }}
       >
         <div className="max-w-2xl mx-auto">
           <motion.h2
-            className="text-4xl md:text-5xl font-bold mb-16 text-center"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-4xl md:text-5xl font-bold mb-16 text-center bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            Contacto
+            Get In Touch
           </motion.h2>
           <ContactForm />
         </div>
       </motion.section>
 
-      <style jsx global>{`
-        @keyframes blink {
-          0%,
-          100% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0;
-          }
-        }
-        .animate-blink {
-          animation: blink 1s infinite;
-        }
-      `}</style>
       <Footer />
       <BackToTopButton />
     </main>

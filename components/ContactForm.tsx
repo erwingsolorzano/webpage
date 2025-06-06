@@ -21,9 +21,9 @@ import { toast } from "sonner";
 import emailjs from "emailjs-com";
 
 const formSchema = z.object({
-  name: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
-  email: z.string().email("Email inválido"),
-  message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
 });
 
 export default function ContactForm() {
@@ -42,7 +42,7 @@ export default function ContactForm() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     if (cooldown) {
-      toast.error("Por favor, espera antes de enviar otro mensaje.");
+      toast.error("Please wait before sending another message.");
       return;
     }
     setIsSubmitting(true);
@@ -54,10 +54,10 @@ export default function ContactForm() {
         values,
         process.env.NEXT_PUBLIC_USER_ID!
       );
-      toast.success("Mensaje enviado correctamente");
+      toast.success("Message sent successfully");
       form.reset();
     } catch (error) {
-      toast.error("Hubo un error al enviar el mensaje");
+      toast.error("There was an error sending the message");
     }
     setIsSubmitting(false);
     setTimeout(() => setCooldown(false), 60000);
@@ -65,105 +65,133 @@ export default function ContactForm() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="bg-background p-4 rounded-lg shadow-lg border max-h-[80vh] overflow-y-auto"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300"
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nombre</FormLabel>
+                <FormLabel className="text-white font-medium">Name</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Tu nombre"
-                    {...field}
-                    className={`border-2 p-2 rounded ${
-                      errors.name ? "border-red-500" : "border-gray-300"
-                    }`}
-                  />
+                  <motion.div
+                    whileFocus={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Input
+                      placeholder="Your name"
+                      {...field}
+                      className={`bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:bg-white/10 transition-all duration-300 ${
+                        errors.name ? "border-red-400" : ""
+                      }`}
+                    />
+                  </motion.div>
                 </FormControl>
-                <FormMessage className="text-red-500 text-sm">
+                <FormMessage className="text-red-400 text-sm">
                   {errors.name?.message}
                 </FormMessage>
               </FormItem>
             )}
           />
+          
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="text-white font-medium">Email</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="tucorreo@ejemplo.com"
-                    type="email"
-                    {...field}
-                    className={`border-2 p-2 rounded ${
-                      errors.email ? "border-red-500" : "border-gray-300"
-                    }`}
-                  />
+                  <motion.div
+                    whileFocus={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Input
+                      placeholder="your.email@example.com"
+                      type="email"
+                      {...field}
+                      className={`bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:bg-white/10 transition-all duration-300 ${
+                        errors.email ? "border-red-400" : ""
+                      }`}
+                    />
+                  </motion.div>
                 </FormControl>
-                <FormMessage className="text-red-500 text-sm">
+                <FormMessage className="text-red-400 text-sm">
                   {errors.email?.message}
                 </FormMessage>
               </FormItem>
             )}
           />
+          
           <FormField
             control={form.control}
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Mensaje</FormLabel>
+                <FormLabel className="text-white font-medium">Message</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Tu mensaje..."
-                    {...field}
-                    className={`min-h-[100px] border-2 p-2 rounded ${
-                      errors.message ? "border-red-500" : "border-gray-300"
-                    }`}
-                  />
+                  <motion.div
+                    whileFocus={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Textarea
+                      placeholder="Your message..."
+                      {...field}
+                      className={`min-h-[120px] bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:bg-white/10 transition-all duration-300 resize-none ${
+                        errors.message ? "border-red-400" : ""
+                      }`}
+                    />
+                  </motion.div>
                 </FormControl>
-                <FormMessage className="text-red-500 text-sm">
+                <FormMessage className="text-red-400 text-sm">
                   {errors.message?.message}
                 </FormMessage>
               </FormItem>
             )}
           />
-          <Button 
-            type="submit"
-            disabled={isSubmitting}
-            className={`relative overflow-hidden w-full border-2 transition-colors ${
-              isSubmitting
-                ? "bg-black text-white border-black"
-                : "hover:bg-black hover:text-white"
-            }`}
+          
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            <Send className="mr-2 h-4 w-4" />
-            <span className="relative z-10 block text-center">
-              {isSubmitting ? "Enviando..." : "Enviar mensaje"}
-            </span>
-            {isSubmitting && (
+            <Button 
+              type="submit"
+              disabled={isSubmitting}
+              className={`relative overflow-hidden w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-0 py-3 text-lg font-medium transition-all duration-300 ${
+                isSubmitting ? "opacity-80" : ""
+              }`}
+            >
               <motion.div
-                className="absolute bottom-0 h-1 bg-white w-full"
-                style={{ transformOrigin: "center" }}
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{
-                  ease: "easeInOut",
-                  duration: 1,
-                  repeat: Infinity,
-                  repeatType: "loop",
-                }}      
+                className="absolute inset-0 bg-white/20"
+                initial={{ x: "-100%" }}
+                whileHover={{ x: "100%" }}
+                transition={{ duration: 0.6 }}
               />
-            )}
-          </Button>
+              
+              <span className="relative flex items-center justify-center gap-3">
+                <Send className="h-5 w-5" />
+                {isSubmitting ? "Sending..." : "Send Message"}
+              </span>
+              
+              {isSubmitting && (
+                <motion.div
+                  className="absolute bottom-0 left-0 h-1 bg-white/40"
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{
+                    duration: 2,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                  }}      
+                />
+              )}
+            </Button>
+          </motion.div>
         </form>
       </Form>
     </motion.div>
