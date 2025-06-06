@@ -78,14 +78,16 @@ export default function ContactForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-white font-medium">Name</FormLabel>
+                {/* <FormLabel className="text-white font-medium">Name</FormLabel> */}
+                <FormLabel className="text-white font-medium">Nombre</FormLabel>
                 <FormControl>
                   <motion.div
                     whileFocus={{ scale: 1.02 }}
                     transition={{ duration: 0.2 }}
                   >
                     <Input
-                      placeholder="Your name"
+                      // placeholder="Your name"
+                      placeholder="Su nombre"
                       {...field}
                       className={`bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:bg-white/10 transition-all duration-300 ${
                         errors.name ? "border-red-400" : ""
@@ -112,7 +114,7 @@ export default function ContactForm() {
                     transition={{ duration: 0.2 }}
                   >
                     <Input
-                      placeholder="your.email@example.com"
+                      placeholder="mi.email@example.com"
                       type="email"
                       {...field}
                       className={`bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:bg-white/10 transition-all duration-300 ${
@@ -133,14 +135,15 @@ export default function ContactForm() {
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-white font-medium">Message</FormLabel>
+                {/* <FormLabel className="text-white font-medium">Message</FormLabel> */}
+                <FormLabel className="text-white font-medium">Mensaje</FormLabel>
                 <FormControl>
                   <motion.div
                     whileFocus={{ scale: 1.02 }}
                     transition={{ duration: 0.2 }}
                   >
                     <Textarea
-                      placeholder="Your message..."
+                      placeholder="Su mensaje..."
                       {...field}
                       className={`min-h-[120px] bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-white/40 focus:bg-white/10 transition-all duration-300 resize-none ${
                         errors.message ? "border-red-400" : ""
@@ -175,7 +178,7 @@ export default function ContactForm() {
               
               <span className="relative flex items-center justify-center gap-3">
                 <Send className="h-5 w-5" />
-                {isSubmitting ? "Sending..." : "Send Message"}
+                {isSubmitting ? "Enviando..." : "Enviar Mensaje"}
               </span>
               
               {isSubmitting && (

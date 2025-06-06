@@ -8,51 +8,60 @@ const MotionButton = motion(Button);
 
 const experiences = [
   {
-    title: "Software Engineer",
+    title: "Ingeniero de Software",
     company: "Equasystems S.A.S",
-    period: "2022 - Present",
-    location: "Remote",
-    description: "Developed custom solutions with Node.js and MySQL, implemented reports in DevExpress/Windows Forms, and managed versions in GitHub. Additionally, optimized databases, integrated APIs, and performed code reviews and unit testing to ensure application quality and security.",
+    period: "2022 - Actualidad",
+    location: "Guayaquil, Ecuador",
+    // description: "Developed custom solutions with Node.js and MySQL, implemented reports in DevExpress/Windows Forms, and managed versions in GitHub. Additionally, optimized databases, integrated APIs, and performed code reviews and unit testing to ensure application quality and security.",
+    description: "Desarrollé soluciones personalizadas con Node.js y MySQL, implementé informes en DevExpress/Windows Forms y gestioné versiones en GitHub. Además, optimicé bases de datos, integré APIs y realicé revisiones de código y pruebas unitarias para garantizar la calidad y seguridad de las aplicaciones.",  
     tags: ["Node.js", "MySQL", "EJS", "React", "Express", "Redis", "AWS"],
     achievements: [
-      "Reduced database query time by 40% through optimization",
-      "Led development of 3 major client projects",
-      "Implemented CI/CD pipeline reducing deployment time by 60%"
+      // "Reduced database query time by 40% through optimization",
+      "Mejoré el performance de un modulo de reclamos, optimizando el codigo siguiendo las buenas prácticas de programación",
+      "Tomé decisiones clave en el desarrollo de diferentes componentes de la aplicación, mejorando la eficiencia y escalabilidad del sistema",
+      "Participé en los deployments de la aplicación, asegurando una transición fluida y sin interrupciones",
     ]
   },
   {
     title: "IT Leader",
     company: "Grant Thornton Ecuador",
     period: "2020 - 2022",
-    location: "Quito, Ecuador",
-    description: "Managed cloud platforms (Azure AD) and developed web applications. Implemented and maintained a Node.js/jQuery application, powered by Angular, for managing electronic receipts from SRI.",
+    location: "Guayaquil, Ecuador",
+    tags: ["Node.js", "Angular", "jQuery", "MongoDB", "Azure AD"],
+    // description: "Managed cloud platforms (Azure AD) and developed web applications. Implemented and maintained a Node.js/jQuery application, powered by Angular, for managing electronic receipts from SRI.",
+    description: "Gestioné plataformas en la nube (Azure AD) y desarrollé aplicaciones web. Implementé y mantuve una aplicación Node.js/jQuery, impulsada por Angular, para gestionar recibos electrónicos del SRI.",
     achievements: [
-      "Managed Azure AD for 200+ users",
-      "Developed electronic receipt management system",
-      "Improved system reliability by 35%"
+      // "Managed Azure AD for 200+ users",
+      "Gestioné Azure AD para más de 20+ usuarios",
+      // "Developed electronic receipt management system",
+      "Brindé soporte y desarrollé mejoras para un sistema de gestión de recibos electrónicos del Servicio de Rentas Internas del Ecuador (SRI)",
+      // "Improved system reliability by 35%"
+      "Implementé un aula virtual y desarrollé un programa de capacitaciones internas a los empleados",
     ]
   },
 ];
 
 const education = [
   {
-    degree: "Systems Engineering",
-    institution: "Universidad Tecnológica Equinoccial",
-    period: "2018 - 2023",
-    location: "Quito, Ecuador"
+    degree: "Ingeniería en Sistemas",
+    institution: "Universidad Politécnica Salesiana",
+    period: "2012 - 2021",
+    location: "Guayaquil, Ecuador"
   }
 ];
 
 const certifications = [
   {
-    name: "AWS Cloud Practitioner",
-    issuer: "Amazon Web Services",
-    year: "2024"
+    name: "Node.js intermedio",
+    issuer: "HackerRank",
+    year: "2025",
+    url: "https://www.hackerrank.com/certificates/iframe/75355a42bda5"
   },
   {
-    name: "Professional Scrum Master I",
-    issuer: "Scrum.org",
-    year: "2023"
+    name: "Desarrollo de Aplicaciones Web",
+    issuer: "SOL&TECH",
+    year: "2022",
+    url: "https://drive.google.com/file/d/12w-M0zTLI9AclyymdhUOOp9AT6f9ZMp5/view?usp=sharing"
   }
 ];
 
@@ -78,11 +87,13 @@ export default function ResumeSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
-            Professional Journey
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 pb-2 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
+            {/* Professional Journey */}
+            Trayectoria Profesional
           </h2>
           <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto font-light">
-            Transforming ideas into scalable solutions with cutting-edge technology
+            {/* Transforming ideas into scalable solutions with cutting-edge technology */}
+            Transformando ideas en soluciones escalables con tecnología de vanguardia
           </p>
           
           <MotionButton
@@ -117,7 +128,8 @@ export default function ResumeSection() {
               />
               <span className="relative flex items-center gap-3">
                 <Download className="h-5 w-5" />
-                Download Resume
+                {/* Download Resume */}
+                Descargar CV
               </span>
             </a>
           </MotionButton>
@@ -136,7 +148,8 @@ export default function ResumeSection() {
               <div className="p-3 rounded-full bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-sm">
                 <Briefcase className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-white">Experience</h3>
+              {/* <h3 className="text-2xl font-bold text-white">Experience</h3> */}
+              <h3 className="text-2xl font-bold text-white">Experiencia</h3>
             </div>
 
             <div className="space-y-8">
@@ -221,7 +234,8 @@ export default function ResumeSection() {
                 <div className="p-3 rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-sm">
                   <GraduationCap className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-white">Education</h3>
+                {/* <h3 className="text-xl font-bold text-white">Education</h3> */}
+                <h3 className="text-xl font-bold text-white">Educación</h3>
               </div>
               
               {education.map((edu, index) => (
@@ -253,7 +267,8 @@ export default function ResumeSection() {
                 <div className="p-3 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 backdrop-blur-sm">
                   <Award className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-white">Certifications</h3>
+                {/* <h3 className="text-xl font-bold text-white">Certifications</h3> */}
+                <h3 className="text-xl font-bold text-white">Certificaciones</h3>
               </div>
               
               <div className="space-y-4">
@@ -269,6 +284,7 @@ export default function ResumeSection() {
                     <h4 className="text-white font-semibold mb-1">{cert.name}</h4>
                     <p className="text-orange-300 text-sm font-medium mb-1">{cert.issuer}</p>
                     <p className="text-gray-400 text-sm">{cert.year}</p>
+                    <a className="text-blue-200 text-sm font-small mb-1" href={cert.url} target="_blank">visualizar</a>
                   </motion.div>
                 ))}
               </div>

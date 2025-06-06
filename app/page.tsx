@@ -201,7 +201,7 @@ export default function Home() {
                 transition={{ duration: 0.3 }}
               >
                 <Image
-                  src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg"
+                  src={`${basePath}/profilepic.png`}
                   alt="Erwing Solórzano"
                   width={160}
                   height={160}
@@ -235,11 +235,11 @@ export default function Home() {
               delay: 0.4
             }}
           >
-            Hello, I'm
+            Hola, soy
           </motion.h2>
           
           <motion.h1
-            className="hero-element text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent leading-tight"
+            className="hero-element text-5xl md:text-7xl font-bold mb-6 pb-2 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent leading-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
@@ -330,13 +330,13 @@ export default function Home() {
       >
         <div className="max-w-6xl mx-auto">
           <motion.h2
-            className="text-4xl md:text-5xl font-bold mb-16 text-center bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
+            className="text-4xl md:text-5xl font-bold mb-16 pb-2 text-center bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            Featured Projects
+            Proyectos
           </motion.h2>
           <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 place-items-center">
             {projects.map((project, index) => (
@@ -380,7 +380,8 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            Tech Stack
+            {/* Tech Stack */}
+            Stack Tecnológico
           </motion.h2>
           <TechStack />
         </div>
@@ -407,7 +408,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            Get In Touch
+            Contáctame
           </motion.h2>
           <ContactForm />
         </div>
