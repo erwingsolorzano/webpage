@@ -144,9 +144,9 @@ export default function Home() {
         <motion.div
           animate={{
             background: [
-              "radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%)",
-              "radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%)",
-              "radial-gradient(circle at 40% 80%, rgba(119, 198, 255, 0.3) 0%, transparent 50%)",
+              "radial-gradient(circle at 20% 50%, rgba(6, 18, 84, 0.3) 0%, transparent 50%)",
+              "radial-gradient(circle at 80% 20%, rgba(0, 0, 0, 0.3) 0%, transparent 50%)",
+              "radial-gradient(circle at 40% 80%, rgba(0, 0, 0, 0.3) 0%, transparent 50%)",
               "radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%)"
             ]
           }}
@@ -226,7 +226,7 @@ export default function Home() {
           </motion.div>
           
           <motion.h2
-            className="hero-element text-3xl md:text-4xl font-light mb-4 text-gray-100 tracking-wide"
+            className="hero-element text-2xl md:text-4xl font-light mb-4 text-gray-100 tracking-wide"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
@@ -239,7 +239,7 @@ export default function Home() {
           </motion.h2>
           
           <motion.h1
-            className="hero-element text-5xl md:text-7xl font-bold mb-6 pb-2 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent leading-tight"
+            className="hero-element text-3xl md:text-5xl font-bold mb-2 pb-4 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent leading-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
@@ -252,7 +252,7 @@ export default function Home() {
           </motion.h1>
 
           <motion.h2
-            className="hero-element text-xl md:text-2xl font-light text-gray-300 mb-8 tracking-wide"
+            className="hero-element text-sm md:text-2xl font-light text-gray-300 mb-6 tracking-wide"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
@@ -265,7 +265,7 @@ export default function Home() {
           </motion.h2>
 
           <motion.p
-            className="hero-element text-lg md:text-xl text-gray-400 leading-relaxed max-w-3xl mx-auto mb-12 font-light"
+            className="hero-element text-2md md:text-xl text-wihte-400 leading-relaxed max-w-10xl mx-auto mb-8 font-light"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
@@ -303,7 +303,7 @@ export default function Home() {
             repeat: Infinity,
             ease: "easeInOut"
           }}
-          className="absolute bottom-10 z-10"
+          className="absolute bottom-8 z-10"
         >
           <motion.div
             whileHover={{ scale: 1.1 }}
